@@ -1,3 +1,8 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 1 optimization:
+# - [MEDIUM] Add concurrency group to "ci.yml"
+# Estimated savings: ~2 min/run
+#
 name: ROS 2 CI
 
 on:
@@ -7,6 +12,10 @@ on:
   schedule:
     - cron: '0 0 * * *'  # every day to test Jazzy packages updates
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build-and-test:
     strategy:
